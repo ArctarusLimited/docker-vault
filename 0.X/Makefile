@@ -3,12 +3,18 @@ export VERSION=1.9.2
 
 .PHONY: build ent-image oss-image xc-prod-image
 
-build: ent-image oss-image
+build: ent-image ent-hsm-image oss-image
 
 ent-image: export PROJECT_NAME=vault-enterprise
 ent-image: export TAG_SUFFIX=_ent
 ent-image: 
 	docker build --label version=$(VERSION) --build-arg VAULT_VERSION=$(VERSION)+ent --no-cache -t $(REGISTRY_NAME)/$(PROJECT_NAME):$(VERSION)$(TAG_SUFFIX) .
+	@../scripts/tag-images.sh
+
+ent-hsm-image: export PROJECT_NAME=vault-enterprise
+ent-hsm-image: export TAG_SUFFIX=_ent.hsm
+ent-hsm-image: 
+	docker build --label version=$(VERSION) --build-arg VAULT_VERSION=$(VERSION)+ent.hsm --build-arg CGO_ENABLED=true --no-cache -t $(REGISTRY_NAME)/$(PROJECT_NAME):$(VERSION)$(TAG_SUFFIX) .
 	@../scripts/tag-images.sh
 
 oss-image: export PROJECT_NAME=vault

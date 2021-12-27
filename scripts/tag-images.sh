@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #    * VERSION - Image version to tag i.e 1.7.0 or 1.7.0-
 #	  * REGISTRY_NAME - Docker Registry Name i.e docker.io/hashicorp
